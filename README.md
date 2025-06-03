@@ -26,51 +26,33 @@ Deployment	Vercel (Frontend & API)
 
 🛠️ Getting Started
 Clone the repository:
+1. git clone (https://github.com/sreenidhis29/nutrifuel.git)
 
-bash
-Copy
-Edit
-git clone https://github.com/yourusername/nutrifuel.git
-cd nutrifuel
-Install dependencies:
+2. cd nutrifuel
 
-bash
-Copy
-Edit
+3. Install dependencies:
 npm install
-Create a .env.local file with the following environment variables:
 
-env
-Copy
-Edit
+4. Create a .env.local file with the following environment variables:
+
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 CLERK_SECRET_KEY=your_clerk_secret_key
 DATABASE_URL=your_neon_database_url
-NEXTAUTH_URL=http://localhost:3000
-Generate Prisma Client:
 
-bash
-Copy
-Edit
+5. Generate Prisma Client:
+
 npx prisma generate
-Push Prisma schema to Neon:
 
-bash
-Copy
-Edit
+6.Push Prisma schema to Neon:
+
 npx prisma db push
-Run the development server:
 
-bash
-Copy
-Edit
+7.Run the development server:
+
 npm run dev
 Open http://localhost:3000 in your browser.
 
 📁 Project Structure
-graphql
-Copy
-Edit
 .
 ├── components/           # Reusable React components  
 ├── pages/                # Next.js pages  
