@@ -36,7 +36,9 @@ npm install
 4. Create a .env.local file with the following environment variables:
 
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+
 CLERK_SECRET_KEY=your_clerk_secret_key
+
 DATABASE_URL=your_neon_database_url
 
 5. Generate Prisma Client:
@@ -62,12 +64,11 @@ Open http://localhost:3000 in your browser.
 ├── styles/               # Tailwind global styles  
 ├── public/               # Static assets  
 └── .env.local            # Environment variables
+
 🔄 Example Prisma Schema
+
 prisma/schema.prisma
 
-prisma
-Copy
-Edit
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -87,6 +88,7 @@ model MealPlan {
   status      String
   user        User     @relation(fields: [userId], references: [id])
 }
+
 📦 Deployment
 Frontend & Backend: Vercel
 
