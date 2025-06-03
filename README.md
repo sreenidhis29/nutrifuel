@@ -114,7 +114,12 @@ Secrets are stored in .env.local or Vercel Environment Settings.
 Prisma enforces schema-level data integrity.
 
 🙌 Contributors
-S Shreenidhi – Project Lead, UI/UX, Frontend Development
+
+S Shreenidhi – Project Lead, Full Stack Developer
+
+Preetham H S - UI/UX Designer, Front End Developer
+
+Kushal M G - UI/UX Designer, Front End Developer
 
 📄 License
 This project is licensed under the MIT License. See the LICENSE file for details.
