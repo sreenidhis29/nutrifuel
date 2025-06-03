@@ -1,91 +1,208 @@
 'use client';
 
-import { useState } from 'react';
-import { useUser } from '@clerk/nextjs';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useFirebase } from '@/context/FirebaseContext';
+import { Button } from '@/components/ui/Button';
+import { Subscription, MealPlan } from '@/types';
+import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
+import styles from './page.module.css';
 
 export default function SubscriptionPage() {
-    const { user } = useUser();
-    const router = useRouter();
-    const [loading, setLoading] = useState(false);
+    const { auth, db } = useFirebase();
+    const [subscription, setSubscription] = useState<Subscription | null>(null);
+    const [mealPlan, setMealPlan] = useState<MealPlan | null>(null);
+    const [loading, setLoading] = useState(true);
 
-    const handleSubscribe = async (plan: string) => {
-        if (!user) {
-            router.push('/sign-in');
-            return;
-        }
+    useEffect(() => {
+        const fetchSubscription = async () => {
+            if (!auth.currentUser) return;
 
-        setLoading(true);
+            try {
+                // Fetch active subscription
+                const subscriptionsRef = collection(db, 'subscriptions');
+                const q = query(
+                    subscriptionsRef,
+                    where('userId', '==', auth.currentUser.uid),
+                    where('status', '==', 'active')
+                );
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+                    const subscriptionData = {
+                        id: querySnapshot.docs[0].id,
+                        ...querySnapshot.docs[0].data()
+                    } as Subscription;
+                    setSubscription(subscriptionData);
+
+                    // Fetch meal plan details
+                    const mealPlanDoc = await getDocs(doc(db, 'mealPlans', subscriptionData.mealPlanId));
+                    if (mealPlanDoc.exists()) {
+                        setMealPlan({
+                            id: mealPlanDoc.id,
+                            ...mealPlanDoc.data()
+                        } as MealPlan);
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching subscription:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchSubscription();
+    }, [auth.currentUser, db]);
+
+    const handlePauseSubscription = async () => {
+        if (!subscription) return;
+
         try {
-            // TODO: Implement subscription logic with your preferred payment provider
-            console.log(`Subscribing to ${plan} plan`);
-            router.push('/dashboard');
+            await updateDoc(doc(db, 'subscriptions', subscription.id), {
+                status: 'paused',
+                updatedAt: new Date()
+            });
+            setSubscription({ ...subscription, status: 'paused' });
         } catch (error) {
-            console.error('Subscription error:', error);
-        } finally {
-            setLoading(false);
+            console.error('Error pausing subscription:', error);
         }
     };
 
+    const handleResumeSubscription = async () => {
+        if (!subscription) return;
+
+        try {
+            await updateDoc(doc(db, 'subscriptions', subscription.id), {
+                status: 'active',
+                updatedAt: new Date()
+            });
+            setSubscription({ ...subscription, status: 'active' });
+        } catch (error) {
+            console.error('Error resuming subscription:', error);
+        }
+    };
+
+    const handleCancelSubscription = async () => {
+        if (!subscription) return;
+
+        try {
+            await updateDoc(doc(db, 'subscriptions', subscription.id), {
+                status: 'cancelled',
+                updatedAt: new Date()
+            });
+            setSubscription({ ...subscription, status: 'cancelled' });
+        } catch (error) {
+            console.error('Error cancelling subscription:', error);
+        }
+    };
+
+    if (loading) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.content}>
+                    <div className={styles.header}>
+                        <h1 className={styles.heading}>Subscription</h1>
+                        <p className={styles.subheading}>
+                            Manage your meal plan subscription
+                        </p>
+                    </div>
+                    <div className={styles.noSubscription}>
+                        <p>Loading...</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (!subscription) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.content}>
+                    <div className={styles.header}>
+                        <h1 className={styles.heading}>Subscription</h1>
+                        <p className={styles.subheading}>
+                            Manage your meal plan subscription
+                        </p>
+                    </div>
+                    <div className={styles.noSubscription}>
+                        <p>You don't have an active subscription.</p>
+                        <Button
+                            variant="primary"
+                            size="lg"
+                            onClick={() => window.location.href = '/meal-plans'}
+                        >
+                            View Meal Plans
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-8">Choose Your Plan</h1>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {/* Basic Plan */}
-                <div className="border rounded-lg p-6 shadow-sm">
-                    <h2 className="text-2xl font-semibold mb-4">Basic</h2>
-                    <p className="text-4xl font-bold mb-4">$29<span className="text-lg">/month</span></p>
-                    <ul className="space-y-2 mb-6">
-                        <li>✓ 5 meals per week</li>
-                        <li>✓ Basic nutrition tracking</li>
-                        <li>✓ Email support</li>
-                    </ul>
-                    <button
-                        onClick={() => handleSubscribe('basic')}
-                        disabled={loading}
-                        className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary/90 disabled:opacity-50"
-                    >
-                        {loading ? 'Processing...' : 'Subscribe Now'}
-                    </button>
+        <div className={styles.container}>
+            <div className={styles.content}>
+                <div className={styles.header}>
+                    <h1 className={styles.heading}>Subscription</h1>
+                    <p className={styles.subheading}>
+                        Manage your meal plan subscription
+                    </p>
                 </div>
 
-                {/* Premium Plan */}
-                <div className="border rounded-lg p-6 shadow-sm bg-primary/5">
-                    <h2 className="text-2xl font-semibold mb-4">Premium</h2>
-                    <p className="text-4xl font-bold mb-4">$49<span className="text-lg">/month</span></p>
-                    <ul className="space-y-2 mb-6">
-                        <li>✓ 10 meals per week</li>
-                        <li>✓ Advanced nutrition tracking</li>
-                        <li>✓ Priority support</li>
-                        <li>✓ Custom meal preferences</li>
-                    </ul>
-                    <button
-                        onClick={() => handleSubscribe('premium')}
-                        disabled={loading}
-                        className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary/90 disabled:opacity-50"
-                    >
-                        {loading ? 'Processing...' : 'Subscribe Now'}
-                    </button>
-                </div>
+                <div className={styles.subscriptionCard}>
+                    <div className={styles.subscriptionHeader}>
+                        <div className={styles.subscriptionInfo}>
+                            <h2>{mealPlan?.name}</h2>
+                            <p>{subscription.deliveryFrequency} delivery</p>
+                        </div>
+                        <span className={`${styles.statusBadge} ${styles[subscription.status]}`}>
+                            {subscription.status.charAt(0).toUpperCase() + subscription.status.slice(1)}
+                        </span>
+                    </div>
 
-                {/* Elite Plan */}
-                <div className="border rounded-lg p-6 shadow-sm">
-                    <h2 className="text-2xl font-semibold mb-4">Elite</h2>
-                    <p className="text-4xl font-bold mb-4">$79<span className="text-lg">/month</span></p>
-                    <ul className="space-y-2 mb-6">
-                        <li>✓ 15 meals per week</li>
-                        <li>✓ Full nutrition tracking</li>
-                        <li>✓ 24/7 support</li>
-                        <li>✓ Custom meal preferences</li>
-                        <li>✓ Personal nutritionist</li>
-                    </ul>
-                    <button
-                        onClick={() => handleSubscribe('elite')}
-                        disabled={loading}
-                        className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary/90 disabled:opacity-50"
-                    >
-                        {loading ? 'Processing...' : 'Subscribe Now'}
-                    </button>
+                    <div className={styles.subscriptionDetails}>
+                        <div className={styles.detailItem}>
+                            <span className={styles.detailLabel}>Start Date</span>
+                            <span className={styles.detailValue}>{new Date(subscription.startDate).toLocaleDateString()}</span>
+                        </div>
+                        <div className={styles.detailItem}>
+                            <span className={styles.detailLabel}>Next Delivery</span>
+                            <span className={styles.detailValue}>{new Date(subscription.endDate).toLocaleDateString()}</span>
+                        </div>
+                        <div className={styles.detailItem}>
+                            <span className={styles.detailLabel}>Delivery Address</span>
+                            <span className={styles.detailValue}>{subscription.deliveryAddress}</span>
+                        </div>
+                        <div className={styles.detailItem}>
+                            <span className={styles.detailLabel}>Price per Day</span>
+                            <span className={styles.detailValue}>${mealPlan?.price}</span>
+                        </div>
+                    </div>
+
+                    <div className={styles.actions}>
+                        {subscription.status === 'active' ? (
+                            <Button
+                                variant="outline"
+                                onClick={handlePauseSubscription}
+                            >
+                                Pause Subscription
+                            </Button>
+                        ) : subscription.status === 'paused' ? (
+                            <Button
+                                variant="primary"
+                                onClick={handleResumeSubscription}
+                            >
+                                Resume Subscription
+                            </Button>
+                        ) : null}
+                        {subscription.status !== 'cancelled' && (
+                            <Button
+                                variant="error"
+                                onClick={handleCancelSubscription}
+                            >
+                                Cancel Subscription
+                            </Button>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,116 +1,169 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useUser } from '@clerk/nextjs';
-import Image from 'next/image';
+import { useAuth } from '@/context/AuthContext';
+import { useFirebase } from '@/context/FirebaseContext';
+import { collection, addDoc, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { indianMeals, Meal } from '@/data/indianMeals';
+import styles from './page.module.css';
 
-interface Meal {
-    id: string;
-    name: string;
-    description: string;
-    imageUrl: string;
-    calories: number;
-    protein: number;
-    carbs: number;
-    fat: number;
-    price: number;
+interface UserMeal extends Meal {
+    date: string;
+    userId: string;
 }
 
 export default function MealsPage() {
-    const { user } = useUser();
-    const [meals, setMeals] = useState<Meal[]>([]);
-    const [loading, setLoading] = useState(true);
+    const { user } = useAuth();
+    const { db } = useFirebase();
+    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+    const [userMeals, setUserMeals] = useState<UserMeal[]>([]);
+    const [selectedType, setSelectedType] = useState<'breakfast' | 'lunch' | 'snack' | 'dinner'>('breakfast');
 
     useEffect(() => {
-        // TODO: Implement meal fetching logic with your preferred backend
-        // This is a placeholder for demonstration
-        const mockMeals: Meal[] = [
-            {
-                id: '1',
-                name: 'Grilled Chicken Bowl',
-                description: 'Grilled chicken breast with quinoa, roasted vegetables, and avocado',
-                imageUrl: '/images/meals/chicken-bowl.jpg',
-                calories: 450,
-                protein: 35,
-                carbs: 40,
-                fat: 15,
-                price: 12.99
-            },
-            {
-                id: '2',
-                name: 'Salmon with Sweet Potato',
-                description: 'Baked salmon with roasted sweet potato and steamed broccoli',
-                imageUrl: '/images/meals/salmon.jpg',
-                calories: 550,
-                protein: 40,
-                carbs: 45,
-                fat: 20,
-                price: 14.99
-            }
-        ];
-        setMeals(mockMeals);
-        setLoading(false);
-    }, []);
+        if (user) {
+            fetchUserMeals();
+        }
+    }, [user, selectedDate]);
 
-    if (loading) {
-        return (
-            <div className="container mx-auto px-4 py-8">
-                <h1 className="text-3xl font-bold mb-8">Our Meals</h1>
-                <p>Loading meals...</p>
-            </div>
+    const fetchUserMeals = async () => {
+        if (!user) return;
+
+        const mealsRef = collection(db, 'userMeals');
+        const q = query(
+            mealsRef,
+            where('userId', '==', user.uid),
+            where('date', '==', selectedDate),
+            orderBy('type')
         );
-    }
+
+        const querySnapshot = await getDocs(q);
+        const meals: UserMeal[] = [];
+        querySnapshot.forEach((doc) => {
+            meals.push(doc.data() as UserMeal);
+        });
+        setUserMeals(meals);
+    };
+
+    const addMeal = async (meal: Meal) => {
+        if (!user) return;
+
+        const userMeal: UserMeal = {
+            ...meal,
+            date: selectedDate,
+            userId: user.uid
+        };
+
+        await addDoc(collection(db, 'userMeals'), userMeal);
+        fetchUserMeals();
+    };
+
+    const getMealsByType = (type: string) => {
+        return indianMeals.filter(meal => meal.type === type);
+    };
+
+    const getTotalNutrition = () => {
+        return userMeals.reduce((acc, meal) => ({
+            calories: acc.calories + meal.calories,
+            protein: acc.protein + meal.protein,
+            carbs: acc.carbs + meal.carbs,
+            fiber: acc.fiber + meal.fiber,
+            fat: acc.fat + meal.fat
+        }), { calories: 0, protein: 0, carbs: 0, fiber: 0, fat: 0 });
+    };
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-8">Our Meals</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {meals.map((meal) => (
-                    <div key={meal.id} className="border rounded-lg overflow-hidden shadow-sm">
-                        <div className="relative h-48">
-                            <Image
-                                src={meal.imageUrl}
-                                alt={meal.name}
-                                fill
-                                className="object-cover"
-                            />
-                        </div>
-                        <div className="p-4">
-                            <h2 className="text-xl font-semibold mb-2">{meal.name}</h2>
-                            <p className="text-gray-600 mb-4">{meal.description}</p>
-                            <div className="grid grid-cols-4 gap-2 mb-4 text-sm">
-                                <div>
-                                    <p className="text-gray-500">Calories</p>
-                                    <p className="font-semibold">{meal.calories}</p>
-                                </div>
-                                <div>
-                                    <p className="text-gray-500">Protein</p>
-                                    <p className="font-semibold">{meal.protein}g</p>
-                                </div>
-                                <div>
-                                    <p className="text-gray-500">Carbs</p>
-                                    <p className="font-semibold">{meal.carbs}g</p>
-                                </div>
-                                <div>
-                                    <p className="text-gray-500">Fat</p>
-                                    <p className="font-semibold">{meal.fat}g</p>
-                                </div>
-                            </div>
-                            <div className="flex justify-between items-center">
-                                <span className="text-xl font-bold">${meal.price.toFixed(2)}</span>
-                                <button
-                                    className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90"
-                                    onClick={() => {
-                                        // TODO: Implement add to cart functionality
-                                        console.log('Add to cart:', meal.id);
-                                    }}
-                                >
-                                    Add to Cart
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <h1>Meal Tracker</h1>
+                <input
+                    type="date"
+                    value={selectedDate}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                    className={styles.datePicker}
+                />
+            </div>
+
+            <div className={styles.mealTypes}>
+                {['breakfast', 'lunch', 'snack', 'dinner'].map((type) => (
+                    <button
+                        key={type}
+                        className={`${styles.mealTypeButton} ${selectedType === type ? styles.active : ''}`}
+                        onClick={() => setSelectedType(type as any)}
+                    >
+                        {type.charAt(0).toUpperCase() + type.slice(1)}
+                    </button>
                 ))}
+            </div>
+
+            <div className={styles.content}>
+                <div className={styles.mealSelection}>
+                    <h2>Select {selectedType.charAt(0).toUpperCase() + selectedType.slice(1)}</h2>
+                    <div className={styles.mealGrid}>
+                        {getMealsByType(selectedType).map((meal) => (
+                            <div key={meal.id} className={styles.mealCard} onClick={() => addMeal(meal)}>
+                                <img src={meal.image} alt={meal.name} className={styles.mealImage} />
+                                <div className={styles.mealInfo}>
+                                    <h3>{meal.name}</h3>
+                                    <p>{meal.description}</p>
+                                    <div className={styles.nutritionInfo}>
+                                        <span>{meal.calories} cal</span>
+                                        <span>{meal.protein}g protein</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className={styles.todayMeals}>
+                    <h2>Today's Meals</h2>
+                    {userMeals.length === 0 ? (
+                        <p className={styles.noMeals}>No meals added for today</p>
+                    ) : (
+                        <>
+                            <div className={styles.mealList}>
+                                {userMeals.map((meal, index) => (
+                                    <div key={index} className={styles.mealItem}>
+                                        <img src={meal.image} alt={meal.name} className={styles.mealThumbnail} />
+                                        <div className={styles.mealDetails}>
+                                            <h3>{meal.name}</h3>
+                                            <p>{meal.type}</p>
+                                            <div className={styles.nutritionInfo}>
+                                                <span>{meal.calories} cal</span>
+                                                <span>{meal.protein}g protein</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className={styles.totalNutrition}>
+                                <h3>Total Nutrition</h3>
+                                <div className={styles.nutritionGrid}>
+                                    <div className={styles.nutritionItem}>
+                                        <span>Calories</span>
+                                        <span>{getTotalNutrition().calories}</span>
+                                    </div>
+                                    <div className={styles.nutritionItem}>
+                                        <span>Protein</span>
+                                        <span>{getTotalNutrition().protein}g</span>
+                                    </div>
+                                    <div className={styles.nutritionItem}>
+                                        <span>Carbs</span>
+                                        <span>{getTotalNutrition().carbs}g</span>
+                                    </div>
+                                    <div className={styles.nutritionItem}>
+                                        <span>Fiber</span>
+                                        <span>{getTotalNutrition().fiber}g</span>
+                                    </div>
+                                    <div className={styles.nutritionItem}>
+                                        <span>Fat</span>
+                                        <span>{getTotalNutrition().fat}g</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    )}
+                </div>
             </div>
         </div>
     );

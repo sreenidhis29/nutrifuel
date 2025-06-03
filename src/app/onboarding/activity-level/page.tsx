@@ -8,53 +8,48 @@ import styles from './page.module.css';
 
 const activityLevels = [
     'Sedentary',
-    'Lightly active',
-    'Active',
+    'Lightly active', \n    'Active',
     'Very active',
 ];
 
 export default function ActivityLevelPage() {
     const router = useRouter();
-    const [selectedLevel, setSelectedLevel] = useState('');
+    const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
 
     const handleNext = () => {
         if (selectedLevel) {
-            // TODO: Save activity level to your preferred backend
-            router.push('/onboarding/goals');
+            // Save selectedLevel to state or context if needed
+            router.push('/onboarding/fitness-goal');
         }
     };
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-8">What's your activity level?</h1>
-            <div className="max-w-2xl mx-auto space-y-4">
-                {activityLevels.map((level) => (
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <div className={styles.logo} role="img" aria-label="NutriFuel Logo">🌿</div>
+                <h1 className={styles.heading}>Select Activity Level</h1>
+            </div>
+
+            <div className={styles.optionsList}>
+                {activityLevels.map(level => (
                     <button
                         key={level}
+                        className={`${styles.optionButton} ${selectedLevel === level ? styles.selected : ''}`}
                         onClick={() => setSelectedLevel(level)}
-                        className={`w-full p-4 text-left border rounded-lg transition-colors ${selectedLevel === level
-                                ? 'border-primary bg-primary/5'
-                                : 'border-gray-200 hover:border-primary/50'
-                            }`}
                     >
-                        <h3 className="text-lg font-semibold">{level}</h3>
-                        <p className="text-gray-600 mt-1">
-                            {level === 'Sedentary' && 'Little or no exercise'}
-                            {level === 'Lightly active' && 'Light exercise 1-3 days/week'}
-                            {level === 'Active' && 'Moderate exercise 3-5 days/week'}
-                            {level === 'Very active' && 'Hard exercise 6-7 days/week'}
-                        </p>
+                        {level === 'Sedentary' && <span className={styles.selectedOptionIndicator}></span>}{level}
                     </button>
                 ))}
             </div>
-            <div className="max-w-2xl mx-auto mt-8">
-                <button
+
+            <div className={styles.buttonContainer}>
+                <Button
                     onClick={handleNext}
+                    fullWidth
                     disabled={!selectedLevel}
-                    className="w-full bg-primary text-white py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    Continue
-                </button>
+                    Next
+                </Button>
             </div>
         </div>
     );
