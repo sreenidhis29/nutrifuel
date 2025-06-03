@@ -1,0 +1,325 @@
+.container {
+    min-height: 100vh;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeInUp 1s ease;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-primary);
+}
+
+.header p {
+    color: var(--color-text-secondary);
+    font-size: 1.1rem;
+}
+
+.tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 1rem;
+}
+
+.tab {
+    background: none;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.tab::after {
+    content: '';
+    position: absolute;
+    bottom: -1rem;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-primary-main);
+    transition: width 0.3s ease;
+}
+
+.tab:hover::after,
+.tab.active::after {
+    width: 100%;
+}
+
+.tab:hover,
+.tab.active {
+    color: var(--color-primary-main);
+}
+
+.content {
+    animation: fadeInUp 1s ease;
+}
+
+.content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--color-text-primary);
+}
+
+.logsGrid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.logCard {
+    background: var(--color-background-paper);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+}
+
+.logCard:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.logHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.logHeader h3 {
+    font-size: 1.2rem;
+    color: var(--color-text-primary);
+}
+
+.date {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+}
+
+.logStats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.stat span {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+}
+
+.stat strong {
+    color: var(--color-text-primary);
+    font-size: 1.1rem;
+}
+
+.exercises h4,
+.meals h4,
+.totalStats h4 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-primary);
+}
+
+.exercises ul {
+    list-style: none;
+    padding: 0;
+}
+
+.exercises li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+}
+
+.exercises li:last-child {
+    border-bottom: none;
+}
+
+.meals {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.meal {
+    background: var(--color-background-default);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.meal h4 {
+    margin-bottom: 0.75rem;
+}
+
+.mealStats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.75rem;
+}
+
+.totalStats {
+    background: var(--color-background-default);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+}
+
+.progressGrid {
+    display: grid;
+    gap: 2rem;
+}
+
+.weightChart {
+    background: var(--color-background-paper);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-md);
+}
+
+.weightChart h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-primary);
+}
+
+.chart {
+    height: 200px;
+    position: relative;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.chartPoint {
+    position: absolute;
+    transform: translateX(-50%);
+}
+
+.point {
+    width: 12px;
+    height: 12px;
+    background: var(--color-primary-main);
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-50%, 50%);
+}
+
+.pointLabel {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.chartDates {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 6px;
+}
+
+.dateLabel {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.measurements {
+    background: var(--color-background-paper);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-md);
+}
+
+.measurements h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-primary);
+}
+
+.measurementsGrid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.measurementCard {
+    background: var(--color-background-default);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.measurementCard h4 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-primary);
+}
+
+.measurementStats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .tabs {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .tab {
+        text-align: center;
+    }
+
+    .logStats,
+    .mealStats,
+    .statsGrid,
+    .measurementStats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .progressGrid {
+        gap: 1.5rem;
+    }
+}

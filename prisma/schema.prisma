@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  clerkId       String    @unique
+  email         String    @unique
+  name          String?
+  preferences   Json?     // Stores user preferences from questionnaire
+  mealPlans     MealPlan[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model MealPlan {
+  id          String    @id @default(cuid())
+  name        String
+  description String
+  type        String    // 'ai' or 'predefined'
+  calories    Int
+  protein     Int
+  carbs       Int
+  fat         Int
+  meals       Json      // Array of meal objects
+  tags        String[]
+  userId      String?
+  user        User?     @relation(fields: [userId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+} 

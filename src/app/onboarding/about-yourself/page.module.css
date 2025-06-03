@@ -1,0 +1,102 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-background-default);
+    padding: 3rem 1rem;
+    /* py-12 px-4 */
+}
+
+.header {
+    max-width: 28rem;
+    /* max-w-md */
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2rem;
+    /* mb-8 */
+}
+
+.logo {
+    margin: auto;
+    margin-bottom: 1rem;
+    /* mb-4 */
+    display: block;
+}
+
+.heading {
+    font-size: 1.875rem;
+    /* text-3xl */
+    font-weight: 700;
+    /* font-bold */
+    color: var(--color-primary-main);
+}
+
+.form {
+    width: 100%;
+    max-width: 28rem;
+    /* max-w-md */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* space-y-4 */
+    margin-bottom: 2rem;
+    /* mb-8 */
+}
+
+.formGroup {
+    width: 100%;
+    /* The design shows label and input grouped visually, handled by form gap */
+}
+
+.label {
+    display: block;
+    font-size: 0.875rem;
+    /* text-sm */
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 0.25rem;
+    /* space between label and input */
+}
+
+.input,
+.select {
+    display: block;
+    width: 100%;
+    border-radius: 0.375rem;
+    /* rounded-md */
+    border: 1px solid #D1D5DB;
+    /* border-gray-300 */
+    padding: 0.5rem 0.75rem;
+    /* px-3 py-2 */
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    background-color: var(--color-background-paper);
+}
+
+/* Style for the select dropdown arrow */
+.select {
+    appearance: none;
+    /* Remove default browser styling */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23757575%22%20d%3D%22M287%2C114.7L159.1%2C21.7c-8.9-8.9-22.2-8.9-31.1%2C0l-128%2C128c-8.9%2C8.9-8.9%2C22.2%2C0%2C31.1%20l15.6%2C15.6c8.9%2C8.9%2C22.2%2C8.9%2C31.1%2C0l96.8-96.8l96.8%2C96.8c8.9%2C8.9%2C22.2%2C8.9%2C31.1%2C0l15.6-15.6%20C295.9%2C137%2C295.9%2C123.6%2C287%2C114.7z%22%2F%3E%3C%2Fsvg%3E');
+    /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    /* Adjust position */
+    background-size: 0.625rem auto;
+    /* Adjust size */
+    padding-right: 2.5rem;
+    /* Make space for the arrow */
+}
+
+.input::placeholder {
+    color: var(--color-text-secondary);
+    /* Placeholder color */
+    opacity: 0.7;
+}
+
+.buttonContainer {
+    width: 100%;
+    max-width: 28rem;
+    /* max-w-md */
+}

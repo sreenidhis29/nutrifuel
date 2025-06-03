@@ -1,0 +1,298 @@
+.container {
+    min-height: 100vh;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-bottom: 3rem;
+    animation: fadeInUp 1s ease;
+}
+
+.heroImage {
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.heroImage::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(0, 0, 0, 0.7) 100%);
+}
+
+.heroContent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    color: white;
+}
+
+.heroContent h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.heroMeta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.category,
+.difficulty,
+.duration,
+.calories {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+}
+
+.description {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+}
+
+.startButton,
+.pauseButton {
+    background: var(--color-primary-main);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.startButton:hover,
+.pauseButton:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+}
+
+.pauseButton {
+    background: var(--color-warning);
+}
+
+.content {
+    display: grid;
+    gap: 3rem;
+}
+
+.workoutSession {
+    animation: fadeInUp 1s ease;
+}
+
+.currentExercise {
+    background: var(--color-background-paper);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+}
+
+.currentExercise h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.exerciseCard {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.exerciseCard h3 {
+    font-size: 1.5rem;
+    color: var(--color-primary-main);
+}
+
+.exerciseDetails {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.exerciseDetails span {
+    background: var(--color-background-default);
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    font-weight: 500;
+}
+
+.restTimer {
+    color: var(--color-warning);
+    font-size: 1.2rem;
+}
+
+.nextButton {
+    background: var(--color-primary-main);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nextButton:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+}
+
+.exerciseVideo {
+    width: 100%;
+    border-radius: 1rem;
+    margin-top: 1rem;
+}
+
+.equipment,
+.tips {
+    background: var(--color-background-paper);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    animation: fadeInUp 1s ease 0.2s both;
+}
+
+.equipment h2,
+.tips h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-primary-main);
+}
+
+.equipment ul,
+.tips ul {
+    list-style: none;
+    padding: 0;
+}
+
+.equipment li,
+.tips li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+}
+
+.equipment li:last-child,
+.tips li:last-child {
+    border-bottom: none;
+}
+
+.exercises {
+    animation: fadeInUp 1s ease 0.4s both;
+}
+
+.exercises h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-primary-main);
+}
+
+.exerciseList {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.exerciseItem {
+    background: var(--color-background-paper);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+}
+
+.exerciseItem:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.exerciseItem h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-primary);
+}
+
+.exerciseMeta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.exerciseMeta span {
+    background: var(--color-background-default);
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.exerciseItem p {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .heroImage {
+        height: 300px;
+    }
+
+    .heroContent h1 {
+        font-size: 2rem;
+    }
+
+    .heroMeta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .exerciseDetails {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .exerciseDetails span {
+        text-align: center;
+    }
+
+    .nextButton {
+        width: 100%;
+    }
+}

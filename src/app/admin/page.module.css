@@ -1,0 +1,115 @@
+.container {
+    min-height: 100vh;
+    background-color: var(--color-background-default);
+    padding: var(--spacing-xl) var(--spacing-md);
+}
+
+.content {
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.heading {
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    color: var(--color-primary-main);
+    margin-bottom: var(--spacing-md);
+}
+
+.subheading {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+}
+
+.tableContainer {
+    background-color: var(--color-background-paper);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    background-color: var(--color-background-default);
+    padding: var(--spacing-md) var(--spacing-lg);
+    text-align: left;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    border-bottom: 1px solid var(--color-background-default);
+}
+
+.table td {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--color-background-default);
+    color: var(--color-text-primary);
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.statusBadge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+}
+
+.statusBadge.delivered {
+    background-color: var(--color-success);
+    color: white;
+}
+
+.statusBadge.out_for_delivery {
+    background-color: var(--color-primary-main);
+    color: white;
+}
+
+.statusBadge.processing {
+    background-color: var(--color-warning);
+    color: white;
+}
+
+.actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.actionButton {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.actionButton.edit {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-main);
+}
+
+.actionButton.delete {
+    background-color: var(--color-error);
+    color: white;
+}
+
+.actionButton:hover {
+    opacity: 0.8;
+}
+
+.noOrders {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+    color: var(--color-text-secondary);
+}

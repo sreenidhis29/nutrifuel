@@ -1,0 +1,129 @@
+.container {
+    min-height: 100vh;
+    background-color: var(--color-background-default);
+    padding: var(--spacing-xl) var(--spacing-md);
+}
+
+.content {
+    max-width: 48rem;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.heading {
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    color: var(--color-primary-main);
+    margin-bottom: var(--spacing-md);
+}
+
+.subheading {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+}
+
+.stepHeading {
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.optionsGrid {
+    display: grid;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.optionButton {
+    padding: var(--spacing-lg);
+    text-align: left;
+    border: 1px solid var(--color-background-paper);
+    border-radius: var(--radius-md);
+    background-color: var(--color-background-paper);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.optionButton:hover {
+    border-color: var(--color-primary-light);
+}
+
+.optionButton.selected {
+    border-color: var(--color-primary-main);
+    background-color: var(--color-primary-light);
+    opacity: 0.1;
+}
+
+.optionTitle {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.optionDescription {
+    color: var(--color-text-secondary);
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+.progressBar {
+    width: 100%;
+    height: 4px;
+    background-color: var(--color-background-paper);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--spacing-xl);
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background-color: var(--color-primary-main);
+    transition: width 0.3s ease-in-out;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.formGroup {
+    width: 100%;
+}
+
+.label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.input,
+.select {
+    display: block;
+    width: 100%;
+    border-radius: var(--radius-md);
+    border: 1px solid #D1D5DB;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    background-color: var(--color-background-paper);
+}
+
+.input:focus,
+.select:focus {
+    outline: none;
+    border-color: var(--color-primary-main);
+    box-shadow: 0 0 0 2px var(--color-primary-light);
+}

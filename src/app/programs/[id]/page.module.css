@@ -1,0 +1,318 @@
+.container {
+    min-height: 100vh;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-bottom: 3rem;
+    animation: fadeInUp 1s ease;
+}
+
+.heroImage {
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.heroImage::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(0, 0, 0, 0.7) 100%);
+}
+
+.heroContent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    color: white;
+}
+
+.heroContent h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.heroMeta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.level,
+.duration,
+.price {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+}
+
+.description {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+}
+
+.enrollButton {
+    background: var(--color-primary-main);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.enrollButton:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+}
+
+.content {
+    display: grid;
+    gap: 3rem;
+}
+
+.features {
+    animation: fadeInUp 1s ease 0.2s both;
+}
+
+.features h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.featureGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.featureCard {
+    background: var(--color-background-paper);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+}
+
+.featureCard:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.featureIcon {
+    background: var(--color-primary-light);
+    color: white;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.schedule {
+    animation: fadeInUp 1s ease 0.4s both;
+}
+
+.schedule h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.weekSelector {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.weekButton {
+    background: var(--color-background-paper);
+    border: 1px solid var(--color-border);
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.weekButton:hover {
+    border-color: var(--color-primary-main);
+    color: var(--color-primary-main);
+}
+
+.weekButton.active {
+    background: var(--color-primary-main);
+    color: white;
+    border-color: var(--color-primary-main);
+}
+
+.weekContent {
+    background: var(--color-background-paper);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-md);
+}
+
+.weekContent h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.weekDetails {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.workouts h4,
+.meals h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--color-primary-main);
+}
+
+.workouts ul,
+.meals ul {
+    list-style: none;
+    padding: 0;
+}
+
+.workouts li,
+.meals li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.workouts li:last-child,
+.meals li:last-child {
+    border-bottom: none;
+}
+
+.testimonials {
+    animation: fadeInUp 1s ease 0.6s both;
+}
+
+.testimonials h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.testimonialGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.testimonialCard {
+    background: var(--color-background-paper);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+}
+
+.testimonialCard:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.testimonialContent {
+    padding: 1.5rem;
+}
+
+.testimonialContent p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-secondary);
+}
+
+.testimonialAuthor {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.testimonialAuthor img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.testimonialAuthor h4 {
+    margin: 0;
+    color: var(--color-text-primary);
+}
+
+.testimonialAuthor span {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .heroImage {
+        height: 300px;
+    }
+
+    .heroContent h1 {
+        font-size: 2rem;
+    }
+
+    .heroMeta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .weekDetails {
+        grid-template-columns: 1fr;
+    }
+
+    .testimonialGrid {
+        grid-template-columns: 1fr;
+    }
+}
