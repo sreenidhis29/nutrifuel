@@ -8,41 +8,44 @@ import styles from './page.module.css';
 
 const activityLevels = [
     'Sedentary',
-    'Lightly active', \n    'Active',
-    'Very active',
+    'Lightly active',
+    'Active',
+    'Very active'
 ];
 
 export default function ActivityLevelPage() {
     const router = useRouter();
-    const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
+    const [selectedLevel, setSelectedLevel] = useState('');
 
     const handleNext = () => {
         if (selectedLevel) {
-            // Save selectedLevel to state or context if needed
-            router.push('/onboarding/fitness-goal');
+            router.push('/onboarding/goals');
         }
     };
 
     return (
-        <div className={styles.container}>
-            <div className={styles.header}>
-                <div className={styles.logo} role="img" aria-label="NutriFuel Logo">🌿</div>
-                <h1 className={styles.heading}>Select Activity Level</h1>
+        <div className="min-h-screen flex flex-col items-center bg-background-default py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-md w-full text-center mb-8">
+                <h1 className="text-3xl font-bold text-primary-main">Activity Level</h1>
+                <p className="text-text-secondary mt-2">How active are you in your daily life?</p>
             </div>
 
-            <div className={styles.optionsList}>
-                {activityLevels.map(level => (
+            <div className="w-full max-w-md space-y-4 mb-8">
+                {activityLevels.map((level) => (
                     <button
                         key={level}
-                        className={`${styles.optionButton} ${selectedLevel === level ? styles.selected : ''}`}
                         onClick={() => setSelectedLevel(level)}
+                        className={`w-full p-4 rounded-lg border ${selectedLevel === level
+                                ? 'border-primary-main bg-primary-50'
+                                : 'border-gray-300 hover:border-primary-main'
+                            }`}
                     >
-                        {level === 'Sedentary' && <span className={styles.selectedOptionIndicator}></span>}{level}
+                        <h3 className="font-medium text-left">{level}</h3>
                     </button>
                 ))}
             </div>
 
-            <div className={styles.buttonContainer}>
+            <div className="w-full max-w-md">
                 <Button
                     onClick={handleNext}
                     fullWidth

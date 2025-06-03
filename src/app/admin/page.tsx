@@ -42,14 +42,12 @@ export default function AdminDashboard() {
     }
 
     // Check if user is admin
-    if (!user?.publicMetadata?.role === 'admin') {
+    if (user?.publicMetadata?.role !== 'admin') {
         return (
             <div className="min-h-screen bg-gradient-to-b from-primary-100/20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
-                        <h1 className="text-2xl font-bold text-gray-900 mb-4">Access Denied</h1>
-                        <p className="text-gray-600">You don't have permission to access this page.</p>
-                    </div>
+                    <h1 className="text-2xl font-bold text-gray-900">Access Denied</h1>
+                    <p className="mt-2 text-gray-600">You do not have permission to access this page.</p>
                 </div>
             </div>
         );

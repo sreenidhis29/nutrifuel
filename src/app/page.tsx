@@ -40,38 +40,39 @@ export default function HomePage() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <div className="relative h-screen">
-        <VideoBackground />
-        <div className="relative z-10 h-full flex items-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-            <div className="text-center">
-              <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight">
-                <span className="block mb-4">Transform Your Health</span>
-                <span className="block text-primary-400 text-6xl md:text-8xl">With NutriFuel</span>
-              </h1>
-              <p className="mt-6 max-w-2xl mx-auto text-xl md:text-2xl text-gray-200 leading-relaxed">
-                Enjoy authentic Indian flavors while maintaining your fitness goals with our specially curated recipes.
-              </p>
-              <div className="mt-8 max-w-md mx-auto sm:flex sm:justify-center md:mt-12">
-                <div className="rounded-md shadow">
-                  <Link
-                    href="/sign-up"
-                    className="w-full flex items-center justify-center px-8 py-4 border border-transparent text-lg font-semibold rounded-md text-white bg-primary-600 hover:bg-primary-700 md:py-5 md:text-xl md:px-12 transition-all duration-200"
-                  >
-                    Get Started
-                  </Link>
-                </div>
-                <div className="mt-4 sm:mt-0 sm:ml-4">
-                  <Link
-                    href="/meal-plans"
-                    className="w-full flex items-center justify-center px-8 py-4 border border-transparent text-lg font-semibold rounded-md text-primary-600 bg-white hover:bg-gray-50 md:py-5 md:text-xl md:px-12 transition-all duration-200"
-                  >
-                    View Meal Plans
-                  </Link>
+        <VideoBackground>
+          <div className="relative z-10 h-full flex items-center">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+              <div className="text-center">
+                <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight">
+                  <span className="block mb-4">Transform Your Health</span>
+                  <span className="block text-primary-400 text-6xl md:text-8xl">With NutriFuel</span>
+                </h1>
+                <p className="mt-6 max-w-2xl mx-auto text-xl md:text-2xl text-gray-200 leading-relaxed">
+                  Enjoy authentic Indian flavors while maintaining your fitness goals with our specially curated recipes.
+                </p>
+                <div className="mt-8 max-w-md mx-auto sm:flex sm:justify-center md:mt-12">
+                  <div className="rounded-md shadow">
+                    <Link
+                      href="/sign-up"
+                      className="w-full flex items-center justify-center px-8 py-4 border border-transparent text-lg font-semibold rounded-md text-white bg-primary-600 hover:bg-primary-700 md:py-5 md:text-xl md:px-12 transition-all duration-200"
+                    >
+                      Get Started
+                    </Link>
+                  </div>
+                  <div className="mt-4 sm:mt-0 sm:ml-4">
+                    <Link
+                      href="/meal-plans"
+                      className="w-full flex items-center justify-center px-8 py-4 border border-transparent text-lg font-semibold rounded-md text-primary-600 bg-white hover:bg-gray-50 md:py-5 md:text-xl md:px-12 transition-all duration-200"
+                    >
+                      View Meal Plans
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </VideoBackground>
       </div>
 
       {/* Features Section */}

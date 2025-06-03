@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { VideoBackground } from '@/components/VideoBackground';
+import VideoBackground from '@/components/VideoBackground';
 import styles from './page.module.css';
 
 interface Program {

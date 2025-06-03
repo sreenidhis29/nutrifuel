@@ -1,5 +1,5 @@
 export type FitnessGoal = 'weight_loss' | 'muscle_gain' | 'maintenance';
-export type DietPreference = 'standard' | 'vegetarian' | 'vegan' | 'keto';
+export type DietPreference = 'standard' | 'vegetarian' | 'vegan' | 'keto' | 'paleo';
 export type UserRole = 'admin' | 'chef' | 'nutritionist' | 'customer';
 
 export interface UserProfile {

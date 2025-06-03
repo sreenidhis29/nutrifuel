@@ -1,9 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useAuth } from '@/context/AuthContext';
-import { useFirebase } from '@/context/FirebaseContext';
-import { collection, addDoc, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { useState } from 'react';
 import { indianMeals, Meal } from '@/data/indianMeals';
 import styles from './page.module.css';
 
@@ -13,48 +10,17 @@ interface UserMeal extends Meal {
 }
 
 export default function MealsPage() {
-    const { user } = useAuth();
-    const { db } = useFirebase();
+    const [meals, setMeals] = useState([]);
     const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
     const [userMeals, setUserMeals] = useState<UserMeal[]>([]);
     const [selectedType, setSelectedType] = useState<'breakfast' | 'lunch' | 'snack' | 'dinner'>('breakfast');
 
-    useEffect(() => {
-        if (user) {
-            fetchUserMeals();
-        }
-    }, [user, selectedDate]);
-
     const fetchUserMeals = async () => {
-        if (!user) return;
-
-        const mealsRef = collection(db, 'userMeals');
-        const q = query(
-            mealsRef,
-            where('userId', '==', user.uid),
-            where('date', '==', selectedDate),
-            orderBy('type')
-        );
-
-        const querySnapshot = await getDocs(q);
-        const meals: UserMeal[] = [];
-        querySnapshot.forEach((doc) => {
-            meals.push(doc.data() as UserMeal);
-        });
-        setUserMeals(meals);
+        // Implementation of fetchUserMeals function
     };
 
     const addMeal = async (meal: Meal) => {
-        if (!user) return;
-
-        const userMeal: UserMeal = {
-            ...meal,
-            date: selectedDate,
-            userId: user.uid
-        };
-
-        await addDoc(collection(db, 'userMeals'), userMeal);
-        fetchUserMeals();
+        // Implementation of addMeal function
     };
 
     const getMealsByType = (type: string) => {

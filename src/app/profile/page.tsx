@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { VideoBackground } from '@/components/VideoBackground';
+import VideoBackground from '@/components/VideoBackground';
 import styles from './page.module.css';
 
 interface UserStats {

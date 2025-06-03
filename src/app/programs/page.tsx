@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { VideoBackground } from '@/components/VideoBackground';
+import VideoBackground from '@/components/VideoBackground';
 import styles from './page.module.css';
 
 interface Program {
@@ -130,7 +130,7 @@ export default function ProgramsPage() {
                             <option value="all">Any Duration</option>
                             <option value="short">Short (≤8 weeks)</option>
                             <option value="medium">Medium (9-16 weeks)</option>
-                            <option value="long">Long (>16 weeks)</option>
+                            <option value="long">Long (&gt;16 weeks)</option>
                         </select>
                     </div>
                 </div>

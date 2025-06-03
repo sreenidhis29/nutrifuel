@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { VideoBackground } from '@/components/VideoBackground';
+import VideoBackground from '@/components/VideoBackground';
 import styles from './page.module.css';
 
 interface WorkoutLog {

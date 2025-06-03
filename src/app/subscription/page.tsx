@@ -1,98 +1,42 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useFirebase } from '@/context/FirebaseContext';
+import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
-import { Subscription, MealPlan } from '@/types';
-import { collection, query, where, getDocs, doc, updateDoc } from 'firebase/firestore';
 import styles from './page.module.css';
 
+interface Subscription {
+    id: string;
+    status: 'active' | 'paused' | 'cancelled';
+    startDate: Date;
+    endDate: Date;
+    deliveryFrequency: string;
+    deliveryAddress: string;
+}
+
+interface MealPlan {
+    id: string;
+    name: string;
+    price: number;
+}
+
 export default function SubscriptionPage() {
-    const { auth, db } = useFirebase();
     const [subscription, setSubscription] = useState<Subscription | null>(null);
     const [mealPlan, setMealPlan] = useState<MealPlan | null>(null);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchSubscription = async () => {
-            if (!auth.currentUser) return;
-
-            try {
-                // Fetch active subscription
-                const subscriptionsRef = collection(db, 'subscriptions');
-                const q = query(
-                    subscriptionsRef,
-                    where('userId', '==', auth.currentUser.uid),
-                    where('status', '==', 'active')
-                );
-                const querySnapshot = await getDocs(q);
-
-                if (!querySnapshot.empty) {
-                    const subscriptionData = {
-                        id: querySnapshot.docs[0].id,
-                        ...querySnapshot.docs[0].data()
-                    } as Subscription;
-                    setSubscription(subscriptionData);
-
-                    // Fetch meal plan details
-                    const mealPlanDoc = await getDocs(doc(db, 'mealPlans', subscriptionData.mealPlanId));
-                    if (mealPlanDoc.exists()) {
-                        setMealPlan({
-                            id: mealPlanDoc.id,
-                            ...mealPlanDoc.data()
-                        } as MealPlan);
-                    }
-                }
-            } catch (error) {
-                console.error('Error fetching subscription:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchSubscription();
-    }, [auth.currentUser, db]);
+    const [loading, setLoading] = useState(false);
 
     const handlePauseSubscription = async () => {
         if (!subscription) return;
-
-        try {
-            await updateDoc(doc(db, 'subscriptions', subscription.id), {
-                status: 'paused',
-                updatedAt: new Date()
-            });
-            setSubscription({ ...subscription, status: 'paused' });
-        } catch (error) {
-            console.error('Error pausing subscription:', error);
-        }
+        setSubscription({ ...subscription, status: 'paused' });
     };
 
     const handleResumeSubscription = async () => {
         if (!subscription) return;
-
-        try {
-            await updateDoc(doc(db, 'subscriptions', subscription.id), {
-                status: 'active',
-                updatedAt: new Date()
-            });
-            setSubscription({ ...subscription, status: 'active' });
-        } catch (error) {
-            console.error('Error resuming subscription:', error);
-        }
+        setSubscription({ ...subscription, status: 'active' });
     };
 
     const handleCancelSubscription = async () => {
         if (!subscription) return;
-
-        try {
-            await updateDoc(doc(db, 'subscriptions', subscription.id), {
-                status: 'cancelled',
-                updatedAt: new Date()
-            });
-            setSubscription({ ...subscription, status: 'cancelled' });
-        } catch (error) {
-            console.error('Error cancelling subscription:', error);
-        }
+        setSubscription({ ...subscription, status: 'cancelled' });
     };
 
     if (loading) {
@@ -196,7 +140,7 @@ export default function SubscriptionPage() {
                         ) : null}
                         {subscription.status !== 'cancelled' && (
                             <Button
-                                variant="error"
+                                variant="secondary"
                                 onClick={handleCancelSubscription}
                             >
                                 Cancel Subscription

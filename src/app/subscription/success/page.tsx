@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { Navigation } from '@/components/Navigation';
+import Navigation from '@/components/Navigation';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 
 export default function SubscriptionSuccessPage() {

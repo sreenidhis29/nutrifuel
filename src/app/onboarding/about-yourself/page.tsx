@@ -15,9 +15,14 @@ export default function AboutYourselfPage() {
     const handleNext = () => {
         // Basic validation (can be improved)
         if (gender && age && weight && height) {
-            // Save data to state/context/Firebase if needed
+            // Save data to state/context if needed
             router.push('/onboarding/dietary-preference');
         }
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        // Save data to state/context if needed
     };
 
     return (

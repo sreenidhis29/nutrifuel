@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { VideoBackground } from '@/components/VideoBackground';
+import VideoBackground from '@/components/VideoBackground';
 import styles from './page.module.css';
 
 interface Workout {
