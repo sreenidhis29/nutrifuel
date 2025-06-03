@@ -13,15 +13,25 @@ ORM	Prisma
 Deployment	Vercel (Frontend & API)
 
 🚀 Features
+
 🧑‍🍳 Goal-based meal plans (e.g. muscle gain, fat loss, endurance)
+
 🥗 Vegetarian & non-vegetarian options
+
 📦 Weekly and monthly subscription system
+
 🔐 Secure authentication via Clerk.dev
+
 📊 Protein intake & nutrition dashboard
+
 🧾 Order tracking and delivery status updates
+
 🎯 Meal selection based on macros & calorie goals
+
 🪄 Admin dashboard for kitchen staff & logistics
+
 📱 Responsive, mobile-first UI with Tailwind CSS
+
 🌐 RESTful API built with Next.js
 
 🛠️ Getting Started
@@ -35,11 +45,11 @@ npm install
 
 4. Create a .env.local file with the following environment variables:
 
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
 
-CLERK_SECRET_KEY=your_clerk_secret_key
+  CLERK_SECRET_KEY=your_clerk_secret_key
 
-DATABASE_URL=your_neon_database_url
+  DATABASE_URL=your_neon_database_url
 
 5. Generate Prisma Client:
 
